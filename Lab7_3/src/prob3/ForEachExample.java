@@ -12,13 +12,13 @@ public class ForEachExample {
 		List<String> list = Arrays.asList("Hello there", "Goodbye", "Back soon", 
 				"Away", "On Vacation", "Everywhere you want to be");
 		
-		Consumer<String> toUpper = new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-                System.out.println(s.toUpperCase());
-            }
-        };
+//		Consumer<String> toUpper = new Consumer<String>() {
+//            @Override
+//            public void accept(String s) {
+//                System.out.println(s.toUpperCase());
+//            }
+//        };
 
-        list.forEach(toUpper);
+        list.forEach(s -> System.out.println(s.toUpperCase()));
 	}
 }
