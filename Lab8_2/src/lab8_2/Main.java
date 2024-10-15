@@ -4,12 +4,16 @@ import java.util.function.Supplier;
 
 public class Main {
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println(GetRandom.supplier.get());
+		Main instance = new Main();
+		GetRandom rand = instance.new GetRandom();
+		System.out.println(rand.get());
 	}
 	
-	class GetRandom {
-		static Supplier<Double> supplier = () -> Math.random();
+	class GetRandom implements Supplier<Double>{
+		@Override
+		public Double get() {
+			return Math.random();
+		}
 	}
 
 }
