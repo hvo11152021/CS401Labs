@@ -22,7 +22,7 @@ public class Main {
 	//a stream pipeline, and prints to the console
 	public static void ordering1(List<Integer> list) {
 		System.out.println(list.stream()
-				.sorted((l, m) -> Integer.valueOf(Math.abs(l)).compareTo(Math.abs(m)))
+				.sorted(Comparator.comparing(Math::abs))
 				.collect(Collectors.toList()));
 		
 	}
@@ -38,7 +38,7 @@ public class Main {
 	public static void ordering2(List<String> words) {
 		System.out.println(words.stream()
 				.map(w -> new StringBuilder(w).reverse().toString())
-				.sorted((w, x) -> String.valueOf(w).compareTo(x))
+				.sorted(Comparator.comparing(w -> String.valueOf(w)))
 				.map(w -> new StringBuilder(w).reverse().toString())
 				.collect(Collectors.toList()));
 	}
