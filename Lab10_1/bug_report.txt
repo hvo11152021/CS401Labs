@@ -1,0 +1,8 @@
+Assigned To: Tom Jones
+classname: Circle, reportedBy: Corazza, description: computePerimeter incorrect, severity: 0
+classname: ClosedCurve, reportedBy: Corazza, description: , severity: 1
+-------------------------
+Assigned To: Joe Smith
+classname: DataMiner, reportedBy: Corazza, description: Should use Logger, severity: 1
+classname: Rectangle, reportedBy: Corazza, description: computePerimeter incorrect, severity: 2
+-------------------------

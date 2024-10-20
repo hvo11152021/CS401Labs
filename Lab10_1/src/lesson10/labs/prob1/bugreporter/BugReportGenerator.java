@@ -1,5 +1,6 @@
 package lesson10.labs.prob1.bugreporter;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,7 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import java.util.logging.Logger;
 
 import lesson10.labs.prob1.classfinder.ClassFinder;
@@ -52,19 +53,50 @@ public class BugReportGenerator {
 	public void reportGenerator() {
 		List<Class<?>> classes = ClassFinder.find(PACKAGE_TO_SCAN);
 		
-		//sample code for reading annotations -- you will need to change
-		//this quite a bit to solve the problem
-		//Sample code below obtains a list of names of developers assigned to bugs
-		List<String> names = new ArrayList<String>();
-		for(Class<?> cl : classes) {
-			if(cl.isAnnotationPresent(BugReport.class)) {
-				BugReport annotation = (BugReport)cl.getAnnotation(BugReport.class);
-				String name = annotation.assignedTo();
-				names.add(name);
-			}
-		}
-		System.out.println(names);
-		
+        Map<String, List<String>> reportMap = new HashMap<>(); // I found hash map useful for this
+        
+        for (Class<?> cl : classes) {
+            if (cl.isAnnotationPresent(BugReport.class)) {
+                BugReport annotation = cl.getAnnotation(BugReport.class);
+                String assignedTo = annotation.assignedTo();
+                
+                String reportDetails = CLASS_NAME + cl.getSimpleName() + ", " +
+                                       REPORTED_BY + annotation.reportedBy() + ", " +
+                                       DESCRIPTION + annotation.description() + ", " +
+                                       SEVERITY + annotation.severity();
+                                       
+                reportMap.computeIfAbsent(assignedTo, k -> new ArrayList<>()).add(reportDetails);
+            }
+        }
+        
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(REPORT_NAME))) {
+            for (Map.Entry<String, List<String>> entry : reportMap.entrySet()) {
+                String assignedTo = entry.getKey();
+                writer.write("Assigned To: " + assignedTo);
+                writer.newLine();
+                
+                for (String report : entry.getValue()) {
+                    writer.write(report);
+                    writer.newLine();
+                }
+                
+                writer.write("-------------------------");
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            LOG.severe("Error: " + e.getMessage());
+        }
+        
+        for (Map.Entry<String, List<String>> entry : reportMap.entrySet()) {
+            String assignedTo = entry.getKey();
+            System.out.println("Assigned To: " + assignedTo);
+            
+            for (String report : entry.getValue()) {
+                System.out.println(report);
+            }
+            
+            System.out.println("-------------------------");
+        }
 	}
 	
 	
