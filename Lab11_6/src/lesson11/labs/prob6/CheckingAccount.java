@@ -10,4 +10,9 @@ public class CheckingAccount extends Account {
 	public double getBalance() {
 		return super.getBalance() - PENALTY;
 	}
+	
+	@Override
+    public String toString() {
+        return "id: " + super.getAcctId() + ", balance: $" + super.getBalance() + "";
+    }
 }

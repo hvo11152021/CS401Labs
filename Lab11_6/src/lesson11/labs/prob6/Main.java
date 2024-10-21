@@ -15,13 +15,9 @@ public class Main {
 		return false;
 	}
 	
-	//your generalization -- should work with lists of
-	//Employees, Accounts. You may not override equals
-	//in the data-holder classes (like Employee, Account, etc)
-	//so you need to find another way to deal with the fact
-	//that these classes do not have their own equals methods.
-	
-	//public static boolean contains2(List<T> list ... )
+	public static <T> T secondSmallest(List<T> list, Comparator<? super T> compare) {
+		return list.stream().sorted(compare).skip(1).findFirst().orElse(null);
+	}
 	
 	public static void test1() {
 		List<String> list = Arrays.asList("Bob", "Joe", "Tom");
@@ -34,6 +30,7 @@ public class Main {
 		list.add(new Employee(1003, "Tom", 60000));
 		list.add(new Employee(1002, "Harry", 70000));
 		list.add(new Employee(1001, "Joe", 50000));
+		System.out.println("2nd lowest paid employee => " + secondSmallest(list, Comparator.comparing(Employee::getSalary)));
 				
 	}
 	
@@ -42,22 +39,19 @@ public class Main {
 		list.add(new Manager(1003, "Tom", 60000, 700));
 		list.add(new Manager(1002, "Harry", 70000, 400));
 		list.add(new Manager(1001, "Joe", 50000, 500));
-		
+		System.out.println("2nd lowest paid manager => " + secondSmallest(list, Comparator.comparing(Manager::getSalary)));
 		
 	}
-	
-	
 	
 	public static void test4() {
 		List<CheckingAccount> list = new ArrayList<>();
 		list.add(new CheckingAccount(1001, 25.00));
 		list.add(new CheckingAccount(1002, 35.00));
 		list.add(new CheckingAccount(1003, 125.00));
-		
+		System.out.println("2nd lowest checking account => " 
+		+ secondSmallest(list, Comparator.comparing(CheckingAccount::getBalance)));
 		
 	}
-	
-	
 	
 	public static void main(String[] args) {
 		test1();

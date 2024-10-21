@@ -16,12 +16,12 @@ public class Employee extends Person {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("<");
+		StringBuilder sb = new StringBuilder("");
 		sb.append("name: ");
 		sb.append(getName());
 		sb.append(" salary: ");
 		sb.append("" + salary);
-		sb.append(" year of birth: ");
+		//sb.append(" year of birth: ");
 		return sb.toString();
 		
 	}
